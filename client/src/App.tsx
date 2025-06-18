@@ -1,5 +1,9 @@
+import AspectBoard from "./AspectBoard";
+
 function App() {
-  return (<div />)
+  return (
+    <AspectBoard></AspectBoard>
+  )
 }
 
 export default App
