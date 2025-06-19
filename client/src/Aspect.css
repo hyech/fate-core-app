@@ -1,15 +1,32 @@
 .aspect {
-    display: flex;
-    position: absolute;
-    margin: 10px;
-    border: solid;
-    border-width: 1px;
-    border-color: black;
-    background-color: rgb(250, 250, 250);
-    box-shadow: 5px 5px;
-    height: 200px;
-    width: 300px;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Brush Script MT', cursive;
+    display:flex;
+    position:absolute;
+    margin:10px;
+    border:solid;
+    border-width:1px;
+    border-color:black;
+    background-color:rgb(250, 250, 250);
+    box-shadow:5px 5px;
+    height:200px;
+    width:300px;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    font-family:'Brush Script MT', cursive;
+    text-wrap:wrap;
+    overflow:hidden;
+}
+
+.aspect_textarea {
+    flex-wrap:wrap;
+    position:absolute;
+    background-color:inherit;
+    height:inherit;
+    width:inherit;
+    text-align:center;
+    justify-content:center;
+    font-family:'Brush Script MT', cursive;
+    border:none;
+    outline:none;
+    resize:none;
 }

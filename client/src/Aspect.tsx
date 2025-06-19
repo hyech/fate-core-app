@@ -9,10 +9,10 @@ type AspectProps = {
 function Aspect({ isActive, onActivate } : AspectProps) {
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [clickOffset, setClickOffset] = useState({ x: 0, y: 0 });
+    const [myText, setMyText] = useState("Test\nTest\nTest");
+    const [inputVis, setInputVis] = useState("none");
 
     const handleDragStart = (e: any) => {
-        console.log(isActive);
-
         setClickOffset({
             x: e.clientX - position.x,
             y: e.clientY - position.y
@@ -26,6 +26,18 @@ function Aspect({ isActive, onActivate } : AspectProps) {
         });
     }
 
+    const handleClick = (e: any) => {
+        setInputVis("flex");
+    }
+
+    const handleKeyDown = (e: any) => {
+        console.log(e);
+        if (e.key === "Enter") {
+            if (e.shiftKey) setMyText(myText + <br></br>);
+            else setInputVis("none");
+        }
+    }
+
     return (
         <div
             className = "aspect"
@@ -36,8 +48,17 @@ function Aspect({ isActive, onActivate } : AspectProps) {
             }}
             onDragStart = {e => { onActivate(); handleDragStart(e) }}
             onDragEnd = {e => handleDragEnd(e)}
+            onClick = {e => handleClick(e)}
         >
-            Test
+            <textarea
+                className = "aspect_textarea"
+                style = {{
+                    display: `${inputVis}`
+                }}
+                onKeyDown = {e => handleKeyDown(e)}
+                onChange = {e => setMyText(e.target.value)}
+            />
+            { myText }
         </div>
     )
 }

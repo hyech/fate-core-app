@@ -3,18 +3,34 @@ import Aspect from "./Aspect";
 
 function AspectBoard() {
     const [activeIndex, setActiveIndex] = useState(0);
+    const [aspectIndex, setAspectIndex] = useState(0);
+    const [children, setChildren] = useState<number[]>([]);
+
+    const handleClick = () => {
+        setChildren([...children, aspectIndex]);
+        setAspectIndex(aspectIndex + 1);
+    }
 
     return (
-        <div className="AspectBoard">
-            <Aspect
-                isActive = {activeIndex === 0}
-                onActivate = {() => setActiveIndex(0)}
-            />
-            <Aspect
-                isActive = {activeIndex === 1}
-                onActivate = {() => setActiveIndex(1)}
-            />
-        </div>
+        <>
+            <button
+                style = {{
+                    height: "100px",
+                    width: "100px",
+                    fontSize: "50px"
+                }}
+                onClick = {() => handleClick()}
+            >+</button>
+            <div className="AspectBoard">
+                {children.map((index) => (
+                    <Aspect
+                        isActive = {activeIndex === index}
+                        onActivate = {() => setActiveIndex(index)}
+                        key = {index}
+                    />
+                ))}
+            </div>
+        </>
     )
 }
 
