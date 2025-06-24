@@ -2,13 +2,16 @@ import { useState } from 'react';
 import Aspect from "./Aspect";
 
 function AspectBoard() {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [aspectIndex, setAspectIndex] = useState(0);
+    const [activeId, setActiveId] = useState(0);
     const [children, setChildren] = useState<number[]>([]);
 
-    const handleClick = () => {
-        setChildren([...children, aspectIndex]);
-        setAspectIndex(aspectIndex + 1);
+    const handleButtonClick = () => {
+        setChildren([...children, Math.random()]);
+    }
+
+    const handleXClick = (idToRemove: number) => {
+        let deleteIndex = children.indexOf(idToRemove);
+        setChildren([...children.slice(0, deleteIndex), ...children.slice(deleteIndex + 1)]);
     }
 
     return (
@@ -19,14 +22,16 @@ function AspectBoard() {
                     width: "100px",
                     fontSize: "50px"
                 }}
-                onClick = {() => handleClick()}
+                onClick = {() => handleButtonClick()}
             >+</button>
             <div className="AspectBoard">
-                {children.map((index) => (
+                {children.map((childId) => (
                     <Aspect
-                        isActive = {activeIndex === index}
-                        onActivate = {() => setActiveIndex(index)}
-                        key = {index}
+                        myId = {childId}
+                        isActive = {activeId === childId}
+                        onActivate = {() => setActiveId(childId)}
+                        onXClick = {(idToRemove: number) => handleXClick(idToRemove)}
+                        key = {childId}
                     />
                 ))}
             </div>

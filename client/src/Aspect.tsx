@@ -2,11 +2,13 @@ import { useState } from 'react';
 import "./Aspect.css";
 
 type AspectProps = {
+    myId: number;
     isActive: boolean;
     onActivate: () => void;
+    onXClick: (idToRemove: number) => void;
 };
 
-function Aspect({ isActive, onActivate } : AspectProps) {
+function Aspect({ myId, isActive, onActivate, onXClick } : AspectProps) {
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [clickOffset, setClickOffset] = useState({ x: 0, y: 0 });
     const [myText, setMyText] = useState("Test\nTest\nTest");
@@ -26,21 +28,20 @@ function Aspect({ isActive, onActivate } : AspectProps) {
         });
     }
 
-    const handleClick = (e: any) => {
+    const handleClick = () => {
         setInputVis("flex");
     }
 
     const handleKeyDown = (e: any) => {
-        console.log(e);
         if (e.key === "Enter") {
-            if (e.shiftKey) setMyText(myText + <br></br>);
+            if (e.shiftKey) setMyText(myText + "\n");
             else setInputVis("none");
         }
     }
 
     return (
         <div
-            className = "aspect"
+            className = "aspect_container"
             draggable = "true"
             style = {{
                 transform: `translate(${position.x}px, ${position.y}px)`,
@@ -48,8 +49,16 @@ function Aspect({ isActive, onActivate } : AspectProps) {
             }}
             onDragStart = {e => { onActivate(); handleDragStart(e) }}
             onDragEnd = {e => handleDragEnd(e)}
-            onClick = {e => handleClick(e)}
+            onClick = {() => handleClick()}
         >
+            <div
+                className = "aspect_text"
+                style = {{
+                    display: `${!inputVis}`
+                }}
+            >
+                { myText }
+            </div>
             <textarea
                 className = "aspect_textarea"
                 style = {{
@@ -58,7 +67,12 @@ function Aspect({ isActive, onActivate } : AspectProps) {
                 onKeyDown = {e => handleKeyDown(e)}
                 onChange = {e => setMyText(e.target.value)}
             />
-            { myText }
+            <button
+                className = "aspect_xbutton"
+                onClick = {() => onXClick(myId)}
+            >
+                X
+            </button>
         </div>
     )
 }

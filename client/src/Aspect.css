@@ -1,5 +1,4 @@
-.aspect {
-    display:flex;
+.aspect_container {
     position:absolute;
     margin:10px;
     border:solid;
@@ -9,24 +8,39 @@
     box-shadow:5px 5px;
     height:200px;
     width:300px;
+}
+
+.aspect_text {
+    position:absolute;
+    height:inherit;
+    width:inherit;
+    display:flex;
     text-align:center;
     justify-content:center;
     align-items:center;
     font-family:'Brush Script MT', cursive;
     text-wrap:wrap;
     overflow:hidden;
+    white-space:pre-line;
 }
 
 .aspect_textarea {
-    flex-wrap:wrap;
     position:absolute;
-    background-color:inherit;
-    height:inherit;
-    width:inherit;
+    height:195px;
+    width:295px;
     text-align:center;
     justify-content:center;
     font-family:'Brush Script MT', cursive;
-    border:none;
+    background-color:inherit;
+    box-shadow:inherit;
+    border:inherit;
     outline:none;
     resize:none;
+}
+
+.aspect_xbutton {
+    position:absolute;
+    margin-left:280px;
+    width:20px;
+    height:20px;
 }
