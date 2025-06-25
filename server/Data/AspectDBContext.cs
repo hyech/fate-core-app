@@ -1,18 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using server.Models.Entities;
 
 namespace server.Data
 {
     public class AspectDBContext : DbContext
     {
-        protected readonly IConfiguration Configuration;
-        public AspectDBContext(IConfiguration configuration)
+        public AspectDBContext(DbContextOptions options) : base(options)
         {
-            Configuration = configuration;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(Configuration.GetConnectionString("AspectsDatabase"));
+            
         }
 
         public DbSet<Aspect> Aspects { get; set; }
