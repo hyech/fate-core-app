@@ -1,17 +1,26 @@
 import { useState } from 'react';
 import "./Aspect.css";
 
+type AspectData = {
+    id: number;
+    text: string;
+    position: { x: number, y: number };
+}
+
 type AspectProps = {
     myId: number;
+    text: string;
+    myPosition: { x: number, y: number }
     isActive: boolean;
+    onUpdate: (data: AspectData) => void;
     onActivate: () => void;
     onXClick: (idToRemove: number) => void;
 };
 
-function Aspect({ myId, isActive, onActivate, onXClick } : AspectProps) {
-    const [position, setPosition] = useState({ x: 0, y: 0 });
+function Aspect({ myId, text, myPosition, isActive, onActivate, onXClick, onUpdate } : AspectProps) {
+    const [position, setPosition] = useState(myPosition);
     const [clickOffset, setClickOffset] = useState({ x: 0, y: 0 });
-    const [myText, setMyText] = useState("Test\nTest\nTest");
+    const [myText, setMyText] = useState(text);
     const [inputVis, setInputVis] = useState("none");
 
     const handleDragStart = (e: any) => {
@@ -21,21 +30,26 @@ function Aspect({ myId, isActive, onActivate, onXClick } : AspectProps) {
         })
     }
 
-    const handleDragEnd = (e: any) => {
-        setPosition({
+    const handleDragEnd = async (e: any) => {
+        let newPosition = {
             x: e.clientX - clickOffset.x,
             y: e.clientY - clickOffset.y
-        });
+        }
+        setPosition(newPosition);
+        onUpdate({id: myId, text: myText, position: newPosition});
     }
 
     const handleClick = () => {
         setInputVis("flex");
     }
 
-    const handleKeyDown = (e: any) => {
+    const handleKeyDown = async (e: any) => {
         if (e.key === "Enter") {
             if (e.shiftKey) setMyText(myText + "\n");
-            else setInputVis("none");
+            else {
+                setInputVis("none");
+                onUpdate({id: myId, text: myText, position: position});
+            }
         }
     }
 
